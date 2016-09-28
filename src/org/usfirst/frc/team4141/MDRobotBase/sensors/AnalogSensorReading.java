@@ -13,6 +13,7 @@ public class AnalogSensorReading extends ReadingBase  {
 		this(sensor,name,value,true,true);
 	}
 
+
 	public double getValue() {
 		return value;
 	}

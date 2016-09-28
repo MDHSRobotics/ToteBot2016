@@ -5,18 +5,15 @@ package org.usfirst.frc.team4141.robot;
 import org.usfirst.frc.team4141.MDRobotBase.MDCommand;
 import org.usfirst.frc.team4141.MDRobotBase.sensors.MD_BuiltInAccelerometer;
 import org.usfirst.frc.team4141.MDRobotBase.sensors.MD_IMU;
-import org.usfirst.frc.team4141.MDRobotBase.sensors.RobotDiagnostics;
 import org.usfirst.frc.team4141.MDRobotBase.MDRobotBase;
-import org.usfirst.frc.team4141.MDRobotBase.config.BooleanConfigSetting;
-import org.usfirst.frc.team4141.MDRobotBase.config.DoubleConfigSetting;
+import org.usfirst.frc.team4141.MDRobotBase.config.IntegerConfigSetting;
 import org.usfirst.frc.team4141.MDRobotBase.config.StringConfigSetting;
 import org.usfirst.frc.team4141.robot.commands.MDPrintCommand;
 import org.usfirst.frc.team4141.robot.subsystems.CoreSubsystem;
-import org.usfirst.frc.team4141.robot.subsystems.DiagnosticsSubsystem;
 import org.usfirst.frc.team4141.robot.subsystems.MDDriveSubsystem;
-import org.usfirst.frc.team4141.robot.subsystems.WebSocketSubsystem;
 import org.usfirst.frc.team4141.robot.subsystems.MDDriveSubsystem.MotorPosition;
 import org.usfirst.frc.team4141.robot.subsystems.MDDriveSubsystem.Type;
+import org.usfirst.frc.team4141.robot.subsystems.MySubsystem;
 
 import edu.wpi.first.wpilibj.Victor;
 
@@ -43,7 +40,12 @@ public class Robot extends MDRobotBase {
 			}, "AutonomousCommand"  //specify the default
 		);
 
-		
+		//Subsystem to manage robot wide config settings
+		add( new CoreSubsystem(this, "core")
+				 .add("name",new StringConfigSetting("ToteBot2016"))					//go ahead name your robot
+				 .add("autoCommand",new StringConfigSetting("AutonomousCommand"))		//name of autoCommand you wish to start with
+				 .configure()
+		);		
 		
 		//A robot is composed of subsystems
 		//A robot will typically have 1 drive system and several other fit to purpose subsystems		
@@ -56,6 +58,11 @@ public class Robot extends MDRobotBase {
 				.configure()
 		);	
 
+		add(new MySubsystem(this, "mySubsystem")
+				.add("setting", new IntegerConfigSetting(0,10,4))
+				.configure()
+		);	
+		
 	}
 
 
