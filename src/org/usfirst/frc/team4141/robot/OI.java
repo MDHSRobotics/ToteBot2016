@@ -6,7 +6,6 @@ import org.usfirst.frc.team4141.MDRobotBase.MDJoystick;
 import org.usfirst.frc.team4141.MDRobotBase.MDRobotBase;
 import org.usfirst.frc.team4141.MDRobotBase.OIBase;
 import org.usfirst.frc.team4141.robot.commands.MDPrintCommand;
-import org.usfirst.frc.team4141.robot.commands.MyCommand;
 
 
 /**
@@ -26,12 +25,11 @@ public class OI extends OIBase{
 		//Typically, a robot will have at least 1 joystick and 1 console
 		
 		//Configure the joystick(s) here
-		add(new MDJoystick(getRobot(), "joystick1", 0)
-			.whenPressed("A",3,new MyCommand(getRobot(),"MyCommand"))
+		add(new MDJoystick(getRobot(), "joystick", 0)
+			.whenPressed("A",3,new MDPrintCommand(getRobot(),"A Command","A Command message"))
+			.whileHeld("leftBumper",6,new MDPrintCommand(getRobot(),"Left Bumper Command","Left Bumper Command message"))
 			.configure()
 		);
-		
-		
 
 		//Configure the RioHID here
 		// Uncomment the following to attach a command to the user button on the RoboRio
@@ -44,7 +42,6 @@ public class OI extends OIBase{
 		//Configure the MDConsole OI here		
 		add(new ConsoleOI(getRobot())
 				.whenPressed("Command1",0,new MDPrintCommand(getRobot(),"Command1","Command1 message"))
-				.whenPressed("MyCommand",0,new MyCommand(getRobot(),"MyCommand"))
 				.configure()
 			);		
 		
