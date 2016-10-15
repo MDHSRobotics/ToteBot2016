@@ -40,6 +40,7 @@ public class MDDriveSubsystem extends MDSubsystem {
 	
 	public MDDriveSubsystem add(MotorPosition position,SpeedController speedController){
 		if(speedController instanceof PWM){
+			
 			super.add(position.toString(),(PWM)speedController);
 		}
 		else
@@ -109,7 +110,7 @@ public class MDDriveSubsystem extends MDSubsystem {
   	  double rotate = joystick.getRawAxis(0);
   	  double[] speeds = interpolator.calculate(forward, rotate);
 	
-	  robotDrive.tankDrive(speeds[0], speeds[1]);
+	  robotDrive.tankDrive(-speeds[0], speeds[1]);
 	}
 	
 	public void stop(){

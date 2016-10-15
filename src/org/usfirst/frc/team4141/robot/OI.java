@@ -26,8 +26,8 @@ public class OI extends OIBase{
 		
 		//Configure the joystick(s) here
 		add(new MDJoystick(getRobot(), "joystick", 0)
-			.whenPressed("A",3,new MDPrintCommand(getRobot(),"A Command","A Command message"))
-			.whileHeld("leftBumper",6,new MDPrintCommand(getRobot(),"Left Bumper Command","Left Bumper Command message"))
+//			.whenPressed("A",3,new MDPrintCommand(getRobot(),"A Command","A Command message"))
+//			.whileHeld("leftBumper",6,new MDPrintCommand(getRobot(),"Left Bumper Command","Left Bumper Command message"))
 			.configure()
 		);
 
@@ -41,7 +41,7 @@ public class OI extends OIBase{
 		
 		//Configure the MDConsole OI here		
 		add(new ConsoleOI(getRobot())
-				.whenPressed("Command1",0,new MDPrintCommand(getRobot(),"Command1","Command1 message"))
+//				.whenPressed("Command1",0,new MDPrintCommand(getRobot(),"Command1","Command1 message"))
 				.configure()
 			);		
 		
