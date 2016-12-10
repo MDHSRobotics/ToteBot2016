@@ -51,7 +51,7 @@ public class Robot extends MDRobotBase {
 		//A robot is composed of subsystems
 		//A robot will typically have 1 drive system and several other fit to purpose subsystems		
 		//The Drive system is a special subsystem in that it has specific logic handle the speed controllers
-		add(new MDDriveSubsystem(this, "driveSystem", Type.ToteDrive)
+		add(new MDDriveSubsystem(this, "driveSystem", Type.MecanumDrive)
 				.add(MotorPosition.frontLeft, new Victor(3))
 				.add(MotorPosition.rearLeft, new Victor(2))
 				.add(MotorPosition.frontRight, new Victor(1))

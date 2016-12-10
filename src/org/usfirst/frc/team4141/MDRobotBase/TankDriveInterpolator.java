@@ -3,6 +3,8 @@ package org.usfirst.frc.team4141.MDRobotBase;
 public class TankDriveInterpolator {
 	private double a;
 	private double b;
+	//TODO fix the right and left motor speed based on forward and reverse settings FOR PLAIN TANK DRIVE
+	
 	public TankDriveInterpolator() {
 		this(0,1);
 	}

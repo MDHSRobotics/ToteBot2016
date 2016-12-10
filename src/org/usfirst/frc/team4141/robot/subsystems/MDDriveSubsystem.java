@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 
 public class MDDriveSubsystem extends MDSubsystem {
@@ -87,8 +88,8 @@ public class MDDriveSubsystem extends MDSubsystem {
 									  || !getMotors().containsKey(MotorPosition.rearRight.toString()) || !getMotors().containsKey(MotorPosition.frontRight.toString())){
 				throw new IllegalArgumentException("Invalid motor configuration for MecanumDrive system.");
 			}	
-			robotDrive = new RobotDrive(get(MotorPosition.rearLeft), get(MotorPosition.frontLeft),
-					get(MotorPosition.rearRight), get(MotorPosition.frontRight));
+			robotDrive = new RobotDrive(get(MotorPosition.frontLeft), get(MotorPosition.rearLeft),
+					get(MotorPosition.frontRight), get(MotorPosition.rearRight));
 			break;
 		default:
 			throw new NotImplementedException("drive of type "+type.toString()+" is not supported.");
@@ -104,13 +105,24 @@ public class MDDriveSubsystem extends MDSubsystem {
 		setDefaultCommand(new ArcadeDriveCommand(getRobot()));
 	}
 	public void arcadeDrive(Joystick joystick) {
-	  double rightTriggerValue = joystick.getRawAxis(3);
-	  double leftTriggerValue = -joystick.getRawAxis(2);
-	  double forward = (rightTriggerValue+leftTriggerValue)*(1.0-(1.0-c));
-  	  double rotate = joystick.getRawAxis(0);
-  	  double[] speeds = interpolator.calculate(forward, rotate);
-	
-	  robotDrive.tankDrive(-speeds[0], speeds[1]);
+  	  if(type ==  Type.ToteDrive || type == Type.TankDrive){
+  		  double rightTriggerValue = joystick.getRawAxis(3);
+  		  double leftTriggerValue = -joystick.getRawAxis(2);
+  		  double forward = (rightTriggerValue+leftTriggerValue)*(1.0-(1.0-c));
+  	  	  double rotate = joystick.getRawAxis(0);
+  		  double[] speeds = interpolator.calculate(forward, rotate);
+  		  robotDrive.tankDrive(-speeds[0], speeds[1]);
+  	  }
+  	  else{
+  		  double x = getRobot().getOi().getJoysticks().get("joystick").getAxis(AxisType.kX);
+  		  double y = getRobot().getOi().getJoysticks().get("joystick").getAxis(AxisType.kY);
+  		  double z = getRobot().getOi().getJoysticks().get("joystick").getAxis(AxisType.kZ);
+  		  double twist = getRobot().getOi().getJoysticks().get("joystick").getAxis(AxisType.kTwist);
+  		  double magnitude = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2)); //todo: figure out how to handle sign
+  		  double direction = Math.atan2(y, x); //TODO do we need to handle x=0
+  		  double rotation = twist;
+  		  robotDrive.mecanumDrive_Polar(magnitude, direction, rotation);
+  	  }
 	}
 	
 	public void stop(){
